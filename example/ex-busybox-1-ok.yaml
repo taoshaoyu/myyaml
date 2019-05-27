@@ -1,0 +1,25 @@
+# ReplicationController / 2
+# Maybe issue: " persistentVolumeClaim nfs"
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: ex-busybox
+spec:
+  replicas: 1
+  selector:
+    name: ex-busybox
+  template:
+    metadata:
+      labels:
+        name: ex-busybox
+    spec:
+      containers:
+      - image: busybox
+        command:
+          - sh
+          - -c
+          - 'while true; do echo hello world; sleep $(($RANDOM % 5 + 5)); done'
+        imagePullPolicy: IfNotPresent
+        name: busybox
+      hostNetwork: true

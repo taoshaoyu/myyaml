@@ -1,0 +1,23 @@
+# ReplicationController / 2
+# Maybe issue: " persistentVolumeClaim nfs"
+
+# Issue: apiVersion mismatch
+apiVersion: v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-example
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+# Issue: no cmdline
+#       command:
+#         - sh
+#         - -c
+#         - 'while true; do echo hello world; sleep $(($RANDOM % 5 + 5)); done'

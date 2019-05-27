@@ -1,0 +1,6 @@
+# 
+FROM taosy/u1804_cn
+RUN apt update && apt install -y curl gnupg gnupg2 
+RUN echo deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main > /etc/apt/sources.list.d/kubernetes.list
+
+
