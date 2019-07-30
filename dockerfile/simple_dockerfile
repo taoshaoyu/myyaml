@@ -1,0 +1,5 @@
+# testapp is a simple hello world app, execute file without dynamic lib
+# 
+FROM scratch
+add testapp /
+CMD ["/testapp"]
