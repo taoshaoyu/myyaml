@@ -1,0 +1,6 @@
+/etc/group
+/etc/passwd
+/etc/ld.so.cache
+/etc/nsswitch.conf
+/etc/securetty
+/etc/login.defs
