@@ -19,9 +19,9 @@ function watch()
 
 while getopts "e:" arg                       
 do
-        case $arg in
-             e)
-                watch $OPTARG 
-                ;;
-        esac
+    case $arg in
+        e)
+            watch $OPTARG
+            ;;
+    esac
 done
