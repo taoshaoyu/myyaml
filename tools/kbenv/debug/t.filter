@@ -4,3 +4,14 @@
 /etc/nsswitch.conf
 /etc/securetty
 /etc/login.defs
+/etc/sudoers.d
+/etc/hosts
+/etc/host.conf
+/etc/sudoers
+/etc/locale.alias
+/etc/shadow
+/etc/environment
+/var/log/auth.log
+/var/log/journal
+/var/log/syslog
+/var/lib/dpkg/updates

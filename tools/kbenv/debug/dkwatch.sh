@@ -14,8 +14,7 @@ function watch()
          reg=${reg}${i}'|'
     done
     reg=${reg:0:(-1)}')'
-    echo -n ${reg} | xargs inotifywait -m  --timefmt '%Y-%m-%d %H:%M'  --format '%T:[%e] %w%f' /etc  /var --exclude
-
+    echo -n ${reg} | xargs inotifywait -m -r  --timefmt '%Y-%m-%d %H:%M'  --format '%T:[%e] %w%f' /etc  /var --exclude
 }
 
 while getopts "e:" arg                       
