@@ -1,5 +1,7 @@
 import shlex
 import subprocess
+import threading
+import os
 
 #shell_cmd = 'python3 ./subprogram2.py'
 #shell_cmd = 'docker events --format "Type={{.Type}}: From={{.From}} Action={{.Action}} ID={{.ID}} Status={{.Status}}"'
@@ -13,8 +15,15 @@ save_fn_list=[]
 def _prepare_fold():
     print()
 
-def _start_capture_log(filename):
+def _loopfun(container_id, filename):
+    cmd="docker logs -f %s > %s 2>&1"%(container_id, filename)
+    os.system(cmd)
+    print("    Thread cmds %s..."%(cmd))
+
+def _start_capture_log(container_id,filename):
     print("    Start to save to %s..."%(filename))
+    threading.Thread(target=_loopfun, args=(container_id,filename)).start()
+
 
 def _stop_capture_log(filename):
     print("    Stop to save to %s..."%(filename))
@@ -76,17 +85,18 @@ def _parse_events(events_log):
                 container_name=v
         except:
             pass
-    print("==image:%s, container:%s, action:%s"%(image_name, container_name,e_event))
+    print("==image:%s, container:%s, action:%s, id=%s"%(image_name, container_name,e_event,e_id))
 
 #    if e_event=='attach' or e_event=='start':  // maybe attach -> start, so ignore attach
     if e_event=='start':
-        filename=_create_filename_to_save("/tmp",image_name, container_name)
+        filename=_create_filename_to_save("/tmp/1",image_name, container_name)
         if filename != None:
-            _start_capture_log(filename)
-    elif e_event=='destroy':
-        filename=_create_filename_to_save("/tmp",image_name, container_name)
-        if filename != None:
-            _stop_capture_log(filename)
+            _start_capture_log(e_id,filename)
+# It seemed that no need to stop, once docker finished, sub process is finished automatically
+#    elif e_event=='destroy':
+#        filename=_create_filename_to_save("/tmp",image_name, container_name)
+#        if filename != None:
+#            _stop_capture_log(filename)
     return 
 
 
