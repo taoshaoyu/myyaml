@@ -85,7 +85,7 @@ def _parse_events(events_log):
                 container_name=v
         except:
             pass
-    print("==image:%s, container:%s, action:%s, id=%s"%(image_name, container_name,e_event,e_id))
+    print("==[%s]image:%s, container:%s, action:%s, id=%s"%(e_time,image_name, container_name,e_event,e_id))
 
 #    if e_event=='attach' or e_event=='start':  // maybe attach -> start, so ignore attach
     if e_event=='start':
