@@ -1,0 +1,9 @@
+From ubuntu:18.04
+RUN apt update
+RUN apt install libprotobuf-c1
+COPY graphene_install.tar.gz /
+RUN tar xvf graphene_install.tar.gz -C /opt/
+RUN /opt/graphene/fixme.sh
+RUN rm -f /graphene_install.tar.gz
+
+
