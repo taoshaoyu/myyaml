@@ -3,7 +3,8 @@ SGX_TOOL_PATH ?= /opt/graphene/tools/signer
 PAL-SGX-SIGN = $(SGX_TOOL_PATH)/pal-sgx-sign
 PAL-SGX-GET-TOKEN = $(SGX_TOOL_PATH)/pal-sgx-get-token
 
-LIB_PAL = /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/host/Linux-SGX/../../../../Runtime/libpal-Linux-SGX.so
+#LIB_PAL = /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/host/Linux-SGX/../../../../Runtime/libpal-Linux-SGX.so
+LIB_PAL = /opt/graphene/libpal-sgx.so
 KEY_FILE = $(SGX_TOOL_PATH)/enclave-key.pem
 
 all:hello.manifest.sgx hello.token
