@@ -35,6 +35,11 @@ cp /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/host/Linux-SGX/
 cp /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/host/Linux-SGX/generated_offsets.py ./graphene/tools/ -fr
 chmod a+rw /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/host/Linux-SGX/signer/enclave-key.pem
 
+cat << EOF | tee ./graphene/fixme.sh
+mkdir -p /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/../../Runtime/
+ln -s /opt/graphene/libpal-sgx.so /home/taosy/work/opensrc/github.com/oscarlab/graphene/Pal/src/../../Runtime/libpal-Linux-SGX.so
+EOF
+chmod a+x ./graphene/fixme.sh
 
 tar czvf graphene_install.tar.gz graphene/
 
