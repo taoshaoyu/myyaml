@@ -12,8 +12,8 @@ all:hello.manifest.sgx hello.token
 hello.token: hello.sig
 	$(PAL-SGX-GET-TOKEN) -output $@ -sig hello.sig
 
-hello.manifest.sgx: manifest hello
-	$(PAL-SGX-SIGN) -libpal $(LIB_PAL) -key $(KEY_FILE) -output $@  -exec hello -manifest manifest
+hello.manifest.sgx: hello.manifest hello
+	$(PAL-SGX-SIGN) -libpal $(LIB_PAL) -key $(KEY_FILE) -output $@  -exec hello -manifest hello.manifest
 
 hello:  hello.o
 	gcc -o hello hello.o
