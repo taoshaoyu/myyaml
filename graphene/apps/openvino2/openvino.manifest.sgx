@@ -1,0 +1,163 @@
+# DO NOT MODIFY. THIS FILE WAS AUTO-GENERATED.
+
+# OpenVINO (object_detection_sample_ssd) manifest example
+#
+# This manifest was prepared and tested on Ubuntu 16.04.
+#
+# OpenVINO must be run with the pal_loader:
+#
+# ./pal_loader openvino.manifest -i input/image.bmp -m model.xml -d CPU
+
+# The executable to load in Graphene.
+loader.exec = file:openvino/inference-engine/bin/intel64/Release/benchmark_app
+loader.execname = benchmark_app
+
+# Graphene environment, including the path to the library OS and the debug
+# option (inline/none).
+loader.preload = file:../../../../../Runtime/libsysdb.so
+loader.debug_type = none
+
+# Environment variables
+loader.env.LD_LIBRARY_PATH = /lib:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu
+
+# Mounted FSes. The following "chroot" FSes mount a part of the host FS into the
+# guest. Other parts of the host FS will not be available in the guest.
+
+# Default glibc files, mounted from the Runtime directory in GRAPHENE_DIR.
+fs.mount.lib.type = chroot
+fs.mount.lib.path = /lib
+fs.mount.lib.uri = file:../../../../../Runtime
+
+# Host-level libraries (/lib/x86_64-linux-gnu) required by OpenVINO.
+fs.mount.lib2.type = chroot
+fs.mount.lib2.path = /lib/x86_64-linux-gnu
+fs.mount.lib2.uri = file:/lib/x86_64-linux-gnu
+
+# More host-level libraries (/usr/lib/x86_64-linux-gnu) required by OpenVINO.
+fs.mount.lib3.type = chroot
+fs.mount.lib3.path = /usr/lib/x86_64-linux-gnu
+fs.mount.lib3.uri = file:/usr/lib/x86_64-linux-gnu
+
+# Host-level directory to NSS files required by Glibc + NSS libs.
+fs.mount.etc.type = chroot
+fs.mount.etc.path = /etc
+fs.mount.etc.uri = file:/etc
+
+# Mount the current working directory
+fs.mount.cwd.type = chroot
+fs.mount.cwd.path = /home/taosy/work/opensrc/github.com/oscarlab/graphene/LibOS/shim/test/apps/openvino2/openvino
+fs.mount.cwd.uri = file:openvino
+
+# SGX general options
+
+# Set the virtual memory size of the SGX enclave. For SGX v1, the enclave
+# size must be specified during signing. If OpenVINO needs more virtual memory
+# than the enclave size, Graphene will not be able to allocate it.
+sgx.enclave_size = 2G
+
+# Set the maximum number of enclave threads. For SGX v1, the number of enclave
+# TCSes must be specified during signing, so the application cannot use more
+# threads than the number of TCSes. Note that Graphene also creates an internal
+# thread for handling inter-process communication (IPC), and potentially another
+# thread for asynchronous events. Therefore, the actual number of threads that
+# the application can create is (sgx.thread_num - 2).
+#
+# We (somewhat arbitrarily) specify 16 threads since OpenVINO is multithreaded.
+sgx.thread_num = 16
+
+# Allow Graphene-SGX to create files (needed for output image out_0.bmp)
+sgx.allow_file_creation = 1
+
+# SGX trusted libraries
+
+# Glibc libraries
+sgx.trusted_files.ld = file:../../../../../Runtime/ld-linux-x86-64.so.2
+sgx.trusted_files.libc = file:../../../../../Runtime/libc.so.6
+sgx.trusted_files.libm = file:../../../../../Runtime/libm.so.6
+sgx.trusted_files.libdl = file:../../../../../Runtime/libdl.so.2
+sgx.trusted_files.librt = file:../../../../../Runtime/librt.so.1
+sgx.trusted_files.libutil = file:../../../../../Runtime/libutil.so.1
+sgx.trusted_files.libpthread = file:../../../../../Runtime/libpthread.so.0
+
+# Name Service Switch (NSS) libraries (Glibc dependencies)
+sgx.trusted_files.libnsscompat = file:/lib/x86_64-linux-gnu/libnss_compat.so.2
+sgx.trusted_files.libnssfiles = file:/lib/x86_64-linux-gnu/libnss_files.so.2
+sgx.trusted_files.libnssnis = file:/lib/x86_64-linux-gnu/libnss_nis.so.2
+
+# libNSL is a dependency of libnss_compat above
+sgx.trusted_files.libnsl = file:/lib/x86_64-linux-gnu/libnsl.so.1
+
+# OpenVINO C++ dependencies
+sgx.trusted_files.libcpp = file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+sgx.trusted_files.libgcc = file:/lib/x86_64-linux-gnu/libgcc_s.so.1
+
+# OpenVINO main libraries
+sgx.trusted_files.libformatreader = file:openvino/inference-engine/bin/intel64/Release/lib/libformat_reader.so
+sgx.trusted_files.libcpuextension = file:openvino/inference-engine/bin/intel64/Release/lib/libcpu_extension.so
+sgx.trusted_files.libinferencenegine = file:openvino/inference-engine/bin/intel64/Release/lib/libinference_engine.so
+sgx.trusted_files.libmkldnnplugin = file:openvino/inference-engine/bin/intel64/Release/lib/libMKLDNNPlugin.so
+sgx.trusted_files.libgnapplugin = file:openvino/inference-engine/bin/intel64/Release/lib/libGNAPlugin.so
+sgx.trusted_files.libcldnnpplugin = file:openvino/inference-engine/bin/intel64/Release/lib/libclDNNPlugin.so
+sgx.trusted_files.libmyriadplugin = file:openvino/inference-engine/bin/intel64/Release/lib/libmyriadPlugin.so
+
+# OpenVINO OpenCV libraries
+sgx.trusted_files.libimgcodecs = file:openvino/inference-engine/temp/opencv_4.1.1_ubuntu18/lib/libopencv_imgcodecs.so.4.1
+sgx.trusted_files.libimgproc = file:openvino/inference-engine/temp/opencv_4.1.1_ubuntu18/lib/libopencv_imgproc.so.4.1
+sgx.trusted_files.libopencvcore = file:openvino/inference-engine/temp/opencv_4.1.1_ubuntu18/lib/libopencv_core.so.4.1
+
+# OpenVINO TBB libraries
+sgx.trusted_files.libtbbmalloc = file:openvino/inference-engine/temp/tbb/lib/libtbbmalloc.so.2
+sgx.trusted_files.libtbb = file:openvino/inference-engine/temp/tbb/lib/libtbb.so.2
+
+
+# OpenVINO SSD300 model
+sgx.trusted_files.pluginsxml = file:openvino/inference-engine/bin/intel64/Release/lib/plugins.xml
+sgx.trusted_files.modelxml = file:model/squeezenet1.1.xml
+sgx.trusted_files.modelbin = file:model/squeezenet1.1.bin
+
+# OpenVINO images (allowed instead of trusted for simplicity)
+sgx.allowed_files.imagesdir = file:images
+
+# Name Service Switch (NSS) files (Glibc reads these files)
+sgx.allowed_files.nsswitch = file:/etc/nsswitch.conf
+sgx.allowed_files.ethers = file:/etc/ethers
+sgx.allowed_files.hosts = file:/etc/hosts
+sgx.allowed_files.group = file:/etc/group
+sgx.allowed_files.passwd = file:/etc/passwd
+
+# Generated by Graphene
+
+sgx.isvprodid = 0
+sgx.isvsvn = 0
+sgx.sigfile = file:openvino.sig
+sgx.static_address = 0
+sgx.trusted_checksum.exec = b7546d34235b427ba9497083994876f02dae61356b82bcec3d6963ae464a62b3
+sgx.trusted_checksum.ld = 950545aee2fce5084f4bedd301bc81e914d7f00c2956d0cb145c407d2a454e0a
+sgx.trusted_checksum.libc = 8d847c17ae7462fb67b5285e591fe35e0f514fbee7d300b651861063fa11b219
+sgx.trusted_checksum.libcldnnpplugin = c501ea3dc9e182e3d58f684992966e72db782202933f6f177518e8d6506303bc
+sgx.trusted_checksum.libcpp = 6726cc7f6d72f64114380973d56efeaf99d4a4b167291fa8338a3bbb811b1779
+sgx.trusted_checksum.libcpuextension = b6918334de18860c3d34b9d5fe7f36e1cdcc75f67c3132f40245de39d2cd88b6
+sgx.trusted_checksum.libdl = d2290454167a6629d80714d43be242fd18427a2c07e3567813c08248f6a46601
+sgx.trusted_checksum.libformatreader = 994b1c57374bd109b87c14310d1f4edd11870cc0b1aa39288e07fd91189f0dd8
+sgx.trusted_checksum.libgcc = e78f03a3817f7b72058b4070c68cd2f42835e4d2c957467d1e34b496dd089ddc
+sgx.trusted_checksum.libgnapplugin = 48c81745ed8fe5dd1382d06f98027063612d9da156b59ecb22b53f742a42d7f7
+sgx.trusted_checksum.libimgcodecs = 8146bdf14f05e7794b8894591c084fbe47b19085db70a7f600b100ee13dc54ee
+sgx.trusted_checksum.libimgproc = 7e7d6d66f6e22c6403b542e446e5cef113d5272b9f6cdb1adab4492ec07f5433
+sgx.trusted_checksum.libinferencenegine = 6af110cee2a7ef002ac68616cfcbbbfab2ade4582589f99e128741826071d2e4
+sgx.trusted_checksum.libm = d01650171dc638f3550ac445e8baae08cb0e4d6e77363afe6d8a884b48ed3eca
+sgx.trusted_checksum.libmkldnnplugin = 8414ffaf32ed381b409bc5d5515748b938aa4af00adbc2ad13247bd251f80d41
+sgx.trusted_checksum.libmyriadplugin = d2e2257856de0f0e0e0ca23685acc335756ee48da059caeaf4d329f317f89602
+sgx.trusted_checksum.libnsl = 0537f34312cbe68e50f8fef04c039d522e034cb4168675349e90da5acb8e6fb2
+sgx.trusted_checksum.libnsscompat = ae8adc404ee9a899ed902bcbbeeddb927cf6abee7295f597b3c03201f820544f
+sgx.trusted_checksum.libnssfiles = 9fc1d921cd85da697eff784dabc6f306465517835474b76d962e4f358a6a7972
+sgx.trusted_checksum.libnssnis = 2fe524dbf0c817a3c9b962261f0e0c6137f6ecfdb509ae58f7c0685dd03ba8e2
+sgx.trusted_checksum.libopencvcore = daf83e5de9ba7762cda91da8d4defe8f197176391209f4544015e886c161e911
+sgx.trusted_checksum.libpthread = 5a2ee5ea38062b841a91baecb40a77782d8b7fd2dacbeec4953983a12eb4e880
+sgx.trusted_checksum.librt = 098b78bd231c68ee152831114689efdc51364d33df4ea9e52f28fdf500721393
+sgx.trusted_checksum.libtbb = f4bd170ed9bd63f3ff2e54e3ccb0e13b5f93603fe2eae8a71204719937e93e77
+sgx.trusted_checksum.libtbbmalloc = ef339884065eecc767c85dffc3210ba7a64a1f045942bef2584eeff2ddcf4b1b
+sgx.trusted_checksum.libutil = 73d3c32a4eb01621c756580e5d68d28f10508e1f4253bc3c20a2f199c2014f34
+sgx.trusted_checksum.modelbin = 4405e29f9d7b91fbd950358c470eed04edfe82a14d766a948add81493803f563
+sgx.trusted_checksum.modelxml = 7ac43569f80f850069c51e44938bbf63ea583804562f4b9d95a314da7a2ebb63
+sgx.trusted_checksum.pluginsxml = 96c28da8e6e91eceb701a0d7951e229de7c06420d44b7be7d784ecb86e92e712
+sgx.trusted_checksum.preload0 = dca95d0de27eba05d5af5192172f038bb6cc5fe462855503a6e6b41b3a044e3a
