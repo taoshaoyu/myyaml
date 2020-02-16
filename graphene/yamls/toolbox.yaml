@@ -20,7 +20,13 @@ spec:
           - bash
         args:
           - -c
-          - "for i in {1..10};do echo test string; sleep 1; done; echo done "
-        ports:
-        - containerPort: 8080
-          protocol: TCP
+          - " ls -l /home/taosy/work/; sleep 5 "
+        volumeMounts:
+        - name: tmp
+          mountPath: /home/taosy/work/tmp
+          subPath: subdir
+          readOnly: true
+      volumes:
+        - name: tmp
+          emptyDir: {}
+
